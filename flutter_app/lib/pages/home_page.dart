@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>{
   String homePageContent = '正在获取数据...';
 
   @override
@@ -31,18 +31,50 @@ class _HomePageState extends State<HomePage> {
             // 店铺信息
             String leaderImage = data['data']['shopInfo']['leaderImage'];
             String leaderPhone = data['data']['shopInfo']['leaderPhone'];
+            // 拼团秒杀
+            String saomaoPic = data['data']['saoma']['PICTURE_ADDRESS'];
+            String integralMallPic = data['data']['integralMallPic']['PICTURE_ADDRESS'];
+            String newUserPic = data['data']['newUser']['PICTURE_ADDRESS'];
+            // 商品推荐
+            List<Map> recommendListData = (data['data']['recommend'] as List).cast();
+            // 楼层
+            String floor1Pic = data['data']['floor1Pic']['PICTURE_ADDRESS'];
+            String floor2Pic = data['data']['floor2Pic']['PICTURE_ADDRESS'];
+            String floor3Pic = data['data']['floor3Pic']['PICTURE_ADDRESS'];
+            List<Map> floor1ListData = (data['data']['floor1'] as List).cast();
+            List<Map> floor2ListData = (data['data']['floor2'] as List).cast();
+            List<Map> floor3ListData = (data['data']['floor3'] as List).cast();
 
-            return Column(
-              children: [
-                // 轮播图
-                SwiperDiy(swiperListData: swiperListData),
-                // 导航区
-                TopNavigator(navigatorListData: navigatorListData),
-                // 广告图片
-                AdBanner(advertesPicture: advertesPicture),
-                // 店铺信息
-                ShopInfo(leaderImage: leaderImage, leaderPhone: leaderPhone,),
-              ],
+            return SingleChildScrollView(
+              child: Container(
+                color: Color.fromARGB(1, 238, 238, 238),
+                child: Column(
+                  children: [
+                    // 轮播图
+                    SwiperDiy(swiperListData: swiperListData),
+                    // 导航区
+                    TopNavigator(navigatorListData: navigatorListData),
+                    // 广告图片
+                    AdBanner(advertesPicture: advertesPicture),
+                    // 店铺信息
+                    ShopInfo(leaderImage: leaderImage, leaderPhone: leaderPhone,),
+                    // 拼团秒杀
+                    Tosaoma(saomaPIC: saomaoPic, integralMallPicPIC: integralMallPic, newUserPIC: newUserPic,),
+                    // 商品推荐
+                    ToRecommend(recommendListData: recommendListData,),
+                    // 楼层
+                    ToFloorTitle(floorPicAddress: floor1Pic,),
+                    ToFloorContent(floorListData: floor1ListData,),
+                    ToFloorTitle(floorPicAddress: floor2Pic,),
+                    ToFloorContent(floorListData: floor2ListData,),
+                    ToFloorTitle(floorPicAddress: floor3Pic,),
+                    ToFloorContent(floorListData: floor3ListData,),
+
+                    // 火爆专区
+                    HotGoods(),
+                  ],
+                ),
+              )
             );
           }else {
             return Center(
@@ -156,6 +188,223 @@ class ShopInfo extends StatelessWidget {
       }
     }
 }
+
+// 拼团秒杀
+class Tosaoma extends StatelessWidget {
+  final String saomaPIC;
+  final String integralMallPicPIC;
+  final String newUserPIC;
+  Tosaoma({Key key, this.saomaPIC, this.integralMallPicPIC, this.newUserPIC}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          Image.network(saomaPIC, width: ScreenUtil().setWidth(250),fit: BoxFit.fill,),
+          Image.network(integralMallPicPIC, width: ScreenUtil().setWidth(250),fit: BoxFit.fill,),
+          Image.network(newUserPIC, width: ScreenUtil().setWidth(250),fit: BoxFit.fill,),
+        ],
+      ),
+    );
+  }
+}
+
+// 商品推荐
+class ToRecommend extends StatelessWidget {
+  final List recommendListData;
+  ToRecommend({Key key, this.recommendListData}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil().setHeight(390),
+      color: Colors.greenAccent,
+      margin: EdgeInsets.only(top: 8),
+      child: Column(
+        children: [
+          _titleWidget(),
+          _recommendListView(),
+        ],
+      ),
+    );
+  }
+
+  // 商品推荐标题
+  Widget _titleWidget() {
+    return Container(
+      height: ScreenUtil().setHeight(60),
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(width: 1, color: Colors.black12),
+        )
+      ),
+      child: Text('商品推荐',
+        style: TextStyle(color: Colors.pink),
+      ),
+    );
+  }
+
+  // 商品推荐列表
+  Widget _recommendListView() {
+    return Container(
+      height: ScreenUtil().setHeight(330),
+      child: ListView.builder(itemBuilder: (context, index) {
+        return _recommendItem(index);
+      },
+        scrollDirection: Axis.horizontal,
+        itemCount: recommendListData.length,
+      ),
+    );
+  }
+
+  Widget _recommendItem(index) {
+    return Container(
+      child: InkWell(
+        onTap: (){},
+        child: Container(
+          height: ScreenUtil().setHeight(330),
+          width: ScreenUtil().setWidth(250),
+          padding: EdgeInsets.all(8.0),
+          decoration:BoxDecoration(
+              color:Colors.white,
+              border:Border(
+                  left: BorderSide(width:1,color:Colors.black12)
+              )
+          ),
+          child: Column(
+            children: [
+              Image.network(recommendListData[index]['image']),
+              Text('${recommendListData[index]['mallPrice']}'),
+              Text('${recommendListData[index]['price']}',
+                style: TextStyle(
+                  decoration: TextDecoration.lineThrough,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 楼层
+class ToFloorTitle extends StatelessWidget {
+  final String floorPicAddress;
+  ToFloorTitle({Key key, this.floorPicAddress}):super(key:key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Image.network(floorPicAddress),
+    );
+  }
+}
+
+class ToFloorContent extends StatelessWidget {
+  final List floorListData;
+  ToFloorContent({Key key, this.floorListData}):super(key:key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          _firstFloor(),
+          _lastFloor(),
+        ],
+      ),
+    );
+  }
+
+  Widget _firstFloor() {
+    return Container(
+      child: Row(
+        children: [
+          _floorItem(floorListData[0]),
+          Column(
+            children: [
+              _floorItem(floorListData[1]),
+              _floorItem(floorListData[2]),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _lastFloor() {
+    return Container(
+      child: Row(
+        children: [
+          _floorItem(floorListData[3]),
+          _floorItem(floorListData[4]),
+        ],
+      ),
+    );
+  }
+
+  Widget _floorItem(Map item) {
+    return Container(
+      width:ScreenUtil().setWidth(375),
+      child: InkWell(
+        onTap: (){},
+        child: Image.network(item['image']),
+      ),
+    );
+  }
+}
+
+// 火爆信息
+class HotGoods extends StatefulWidget {
+  @override
+  _HotGoodsState createState() => _HotGoodsState();
+}
+
+class _HotGoodsState extends State<HotGoods> {
+
+  int page = 1;
+  List<Map> hotGoodsList = [];
+
+  void _getHotGoodData() {
+    var formPage = {'page', page};
+    request('homePageBelowConten', formData: formPage).then((value) {
+      print('value1111 = ${value}');
+      var data = json.decode(value.toString());
+      List<Map> newGoodsList = (data['data'] as List).cast();
+      setState(() {
+        hotGoodsList.addAll(newGoodsList);
+        page ++;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getHotGoodData();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil().setHeight(300),
+      color: Colors.red,
+    );
+  }
+}
+
+
+
+
 
 
 

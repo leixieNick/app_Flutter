@@ -11,6 +11,7 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
+
   final List<BottomNavigationBarItem> bottomTabs = [
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), title: Text('首页')),
     BottomNavigationBarItem(icon: Icon(CupertinoIcons.search),title: Text('分类')),
@@ -56,4 +57,3 @@ class _IndexPageState extends State<IndexPage> {
     );
   }
 }
-
