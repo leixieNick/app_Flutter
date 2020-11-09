@@ -54,6 +54,9 @@ Future request(url, {formData}) async {
     Response response;
     Dio dio = new Dio();
 
+    // 如果此类型不加，则 'page' = 1 这种格式不会被识别
+    dio.options.contentType = ContentType.parse("application/x-www-form-urlencoded").toString();
+
     if (formData == null) {
       response = await dio.post(servicePath[url]);
     }else {
@@ -61,7 +64,6 @@ Future request(url, {formData}) async {
       response = await dio.post(servicePath[url],data: formData);
     }
 
-    print('response111 = ${response}');
     if (response.statusCode == 200) {
       print('数据获取成功');
       return response.data;

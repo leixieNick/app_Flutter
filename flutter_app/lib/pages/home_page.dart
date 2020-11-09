@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import 'package:flutter/material.dart';
 import '../service/service_method.dart';
@@ -45,36 +46,42 @@ class _HomePageState extends State<HomePage>{
             List<Map> floor2ListData = (data['data']['floor2'] as List).cast();
             List<Map> floor3ListData = (data['data']['floor3'] as List).cast();
 
-            return SingleChildScrollView(
-              child: Container(
-                color: Color.fromARGB(1, 238, 238, 238),
-                child: Column(
-                  children: [
-                    // 轮播图
-                    SwiperDiy(swiperListData: swiperListData),
-                    // 导航区
-                    TopNavigator(navigatorListData: navigatorListData),
-                    // 广告图片
-                    AdBanner(advertesPicture: advertesPicture),
-                    // 店铺信息
-                    ShopInfo(leaderImage: leaderImage, leaderPhone: leaderPhone,),
-                    // 拼团秒杀
-                    Tosaoma(saomaPIC: saomaoPic, integralMallPicPIC: integralMallPic, newUserPIC: newUserPic,),
-                    // 商品推荐
-                    ToRecommend(recommendListData: recommendListData,),
-                    // 楼层
-                    ToFloorTitle(floorPicAddress: floor1Pic,),
-                    ToFloorContent(floorListData: floor1ListData,),
-                    ToFloorTitle(floorPicAddress: floor2Pic,),
-                    ToFloorContent(floorListData: floor2ListData,),
-                    ToFloorTitle(floorPicAddress: floor3Pic,),
-                    ToFloorContent(floorListData: floor3ListData,),
+            return EasyRefresh(
+              child: ListView(
+                children: [
+                  // 轮播图
+                  SwiperDiy(swiperListData: swiperListData),
+                  // 导航区
+                  TopNavigator(navigatorListData: navigatorListData),
+                  // 广告图片
+                  AdBanner(advertesPicture: advertesPicture),
+                  // 店铺信息
+                  ShopInfo(leaderImage: leaderImage, leaderPhone: leaderPhone,),
+                  // 拼团秒杀
+                  Tosaoma(saomaPIC: saomaoPic, integralMallPicPIC: integralMallPic, newUserPIC: newUserPic,),
+                  // 商品推荐
+                  ToRecommend(recommendListData: recommendListData,),
+                  // 楼层
+                  ToFloorTitle(floorPicAddress: floor1Pic,),
+                  ToFloorContent(floorListData: floor1ListData,),
+                  ToFloorTitle(floorPicAddress: floor2Pic,),
+                  ToFloorContent(floorListData: floor2ListData,),
+                  ToFloorTitle(floorPicAddress: floor3Pic,),
+                  ToFloorContent(floorListData: floor3ListData,),
 
-                    // 火爆专区
-                    HotGoods(),
-                  ],
-                ),
-              )
+                  // 火爆专区
+                  HotGoods(),
+                ],
+              ),
+
+              onRefresh: () async{
+                print('onRefresh');
+              },
+              onLoad: () async {
+                print('onLoad');
+                // 涉及两个 StatefulWidget 之间的通信，还有问题，待解决
+              },
+
             );
           }else {
             return Center(
@@ -375,7 +382,6 @@ class _HotGoodsState extends State<HotGoods> {
   void _getHotGoodData() {
     var formPage = {'page', page};
     request('homePageBelowConten', formData: formPage).then((value) {
-      print('value1111 = ${value}');
       var data = json.decode(value.toString());
       List<Map> newGoodsList = (data['data'] as List).cast();
       setState(() {
@@ -396,9 +402,72 @@ class _HotGoodsState extends State<HotGoods> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtil().setHeight(300),
-      color: Colors.red,
+      color: Colors.black12,
+      child: Column(
+        children: [
+          hotTitle,
+          _wrapList(),
+        ],
+      ),
     );
+  }
+
+  Widget hotTitle = Container(
+    child: Text('火爆专区'),
+    alignment: Alignment.center,
+    margin: EdgeInsets.only(top: 5),
+    padding: EdgeInsets.all(5.0),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border(
+        bottom: BorderSide(width: 1.0, color: Colors.black12),
+      )
+    ),
+  );
+
+  Widget _wrapList() {
+    if (hotGoodsList.length != 0) {
+      List<Widget> ListWidget = hotGoodsList.map((value) {
+        return InkWell(
+          onTap: (){},
+          child: Container(
+            width: ScreenUtil().setWidth(373),
+            color: Colors.white,
+            padding: EdgeInsets.all(5.0),
+            margin:EdgeInsets.only(bottom:1.0),
+            child: Column(
+              children: [
+                Image.network(value['image'],fit: BoxFit.fill,),
+                Text(value['name'],
+                    maxLines: 1,
+                    style: TextStyle(color: Colors.pink, fontSize: ScreenUtil().setSp(26.0)),),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
+                      child: Text('￥${value['mallPrice']}'),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 60),
+                      child: Text('￥${value['price']}',
+                        style: TextStyle(color: Colors.black26, decoration: TextDecoration.lineThrough),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      }).toList();
+
+      return Wrap(
+        spacing: 2,
+        children: ListWidget,
+      );
+    }else {
+      return Text('');
+    }
   }
 }
 
