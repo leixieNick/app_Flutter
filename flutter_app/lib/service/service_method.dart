@@ -60,7 +60,6 @@ Future request(url, {formData}) async {
     if (formData == null) {
       response = await dio.post(servicePath[url]);
     }else {
-      print('servicePath = ${servicePath[url]}');
       response = await dio.post(servicePath[url],data: formData);
     }
 

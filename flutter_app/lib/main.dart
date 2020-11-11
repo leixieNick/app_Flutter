@@ -1,8 +1,22 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:provide/provide.dart';
 import './pages/index_page.dart';
 
+import './provide/child_category.dart';
+
 void main() {
-  runApp(MyApp());
+
+  Counter counter;
+  var providers  =Providers();
+  var childCategory = ChildCategory();
+  providers
+    ..provide(Provider<Counter>.value(counter))
+    ..provide(Provider<ChildCategory>.value(childCategory));
+
+  //runApp(MyApp());
+  runApp(ProviderNode(child: MyApp(), providers: providers));
 }
 
 class MyApp extends StatelessWidget {

@@ -4,4 +4,5 @@ const serviceUrl = 'https://wxmini.baixingliangfan.cn/baixing/wxmini/';
 const servicePath = {
   'homePageContext':serviceUrl + 'homePageContent', // 商家首页信息
   'homePageBelowConten':serviceUrl + 'homePageBelowConten', // 商家首页火爆信息
+  'getCategory':serviceUrl + 'getCategory', // 商品类别信息
 };
