@@ -7,8 +7,8 @@ class ChildCategory with ChangeNotifier {
   String categoryId = '4';
 
   // 点击大类时更换
-  getChildCategory(List<BxMallSubDto> list) {
-    categoryId = '4';
+  getChildCategory(List<BxMallSubDto> list, String id) {
+    categoryId = id;
     childIndex = 0;
 
     BxMallSubDto all = BxMallSubDto();
