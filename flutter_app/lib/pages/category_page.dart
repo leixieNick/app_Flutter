@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:ui';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../service/service_method.dart';
-import 'dart:convert';
-import '../model/categoryModel.dart';
 import 'package:provide/provide.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../service/service_method.dart';
+import '../model/categoryModel.dart';
 import '../model/categoryGoodsList.dart';
 import '../provide/child_category.dart';
 import '../provide/category_goods_list.dart';
@@ -72,7 +74,18 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       'categorySubId': '',
       'page': 1
     };
-    print('data = ${data}');
+
+    // 测试使用FlutterToast]
+    Fluttertoast.showToast(
+        msg: "This is Center Short Toast",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.pink,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+
     await request('getMallGoods', formData: data).then((value) {
       var data = json.decode(value.toString());
       CategoryGoodsListModel model = CategoryGoodsListModel.fromJson(data);
@@ -154,7 +167,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
       'categorySubId': categorySubId,
       'page': 1
     };
-    print('data1 = ${data}');
+
     await request('getMallGoods', formData: data).then((value) {
       var data = json.decode(value.toString());
       CategoryGoodsListModel model = CategoryGoodsListModel.fromJson(data);
