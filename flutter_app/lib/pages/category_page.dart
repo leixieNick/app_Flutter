@@ -76,7 +76,11 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     await request('getMallGoods', formData: data).then((value) {
       var data = json.decode(value.toString());
       CategoryGoodsListModel model = CategoryGoodsListModel.fromJson(data);
-      Provide.value<CategoryGoodsListProvide>(context).getGoodsList(model.data);
+      if (model.data == null) {
+        Provide.value<CategoryGoodsListProvide>(context).getGoodsList([]);
+      }else {
+        Provide.value<CategoryGoodsListProvide>(context).getGoodsList(model.data);
+      }
     });
   }
 
@@ -188,7 +192,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
 
     return InkWell(
       onTap: (){
-        Provide.value<ChildCategory>(context).changeChildIndex(index);
+        Provide.value<ChildCategory>(context).changeChildIndex(index, '');
         _getGoodList(categorySubId: item.mallSubId);
       },
       child: Container(
@@ -215,7 +219,8 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   @override
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(builder: (context, child, data){
-      return Expanded(
+      if (data.goodsList.length > 0) {
+        return Expanded(
           child: Container(
             width: ScreenUtil().setWidth(570),
             color: Colors.red,
@@ -224,7 +229,11 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
             },
               itemCount: data.goodsList.length,
             ),
-          ));
+          ),
+        );
+      }else {
+        return Text('暂时没有数据');
+      }
     },
     );
   }
