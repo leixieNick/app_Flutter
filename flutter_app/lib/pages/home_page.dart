@@ -110,7 +110,12 @@ class SwiperDiy extends StatelessWidget {
       width: ScreenUtil().setWidth(750),
       child: new Swiper(itemCount: swiperListData.length,
         itemBuilder: (BuildContext context, int index){
-          return Image.network("${swiperListData[index]["image"]}",fit: BoxFit.fill);
+          return InkWell(
+            onTap: (){
+              Application.router.navigateTo(context, "/detail?id=${swiperListData[index]['goodsId']}");
+            },
+            child: Image.network("${swiperListData[index]["image"]}",fit: BoxFit.fill),
+          );
         },
         pagination: new SwiperPagination(),
         autoplay: true,
@@ -324,22 +329,22 @@ class ToFloorContent extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          _firstFloor(),
-          _lastFloor(),
+          _firstFloor(context),
+          _lastFloor(context),
         ],
       ),
     );
   }
 
-  Widget _firstFloor() {
+  Widget _firstFloor(context) {
     return Container(
       child: Row(
         children: [
-          _floorItem(floorListData[0]),
+          _floorItem(context, floorListData[0]),
           Column(
             children: [
-              _floorItem(floorListData[1]),
-              _floorItem(floorListData[2]),
+              _floorItem(context, floorListData[1]),
+              _floorItem(context, floorListData[2]),
             ],
           )
         ],
@@ -347,22 +352,24 @@ class ToFloorContent extends StatelessWidget {
     );
   }
 
-  Widget _lastFloor() {
+  Widget _lastFloor(context) {
     return Container(
       child: Row(
         children: [
-          _floorItem(floorListData[3]),
-          _floorItem(floorListData[4]),
+          _floorItem(context, floorListData[3]),
+          _floorItem(context, floorListData[4]),
         ],
       ),
     );
   }
 
-  Widget _floorItem(Map item) {
+  Widget _floorItem(context, Map item) {
     return Container(
       width:ScreenUtil().setWidth(375),
       child: InkWell(
-        onTap: (){},
+        onTap: (){
+          Application.router.navigateTo(context, '/detail?id=${item['goodsId']}');
+        },
         child: Image.network(item['image']),
       ),
     );
