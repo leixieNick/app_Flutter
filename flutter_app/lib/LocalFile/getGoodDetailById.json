@@ -1,0 +1,32 @@
+{
+  "code": "0",
+  "message": "success",
+  "data": {
+    "goodInfo": {
+      "image5": "",
+      "amount": 10000,
+      "image3": "",
+      "image4": "",
+      "goodsId": "6206acddbc6844aba8f2628dc5ac57aa",
+      "isOnline": "yes",
+      "image1": "https://images.baixingliangfan.cn/shopGoodsImg/20200929/20200929191045_359.png",
+      "image2": "",
+      "gift_coupons_offline": "",
+      "TYPE_SHIP": 1,
+      "goodsSerialNumber": "104227",
+      "oriPrice": 23.94,
+      "presentPrice": 13.60,
+      "comPic": "https://images.baixingliangfan.cn/compressedPic/20200929191045_359.png",
+      "state": 1,
+      "shopId": "402880e860166f3c0160167897d60002",
+      "goodsName": "攀枝花软籽石榴（约2斤）",
+      "goodsDetail": "<img src=\"https://images.baixingliangfan.cn/shopGoodsDetailImg/20201009/20201009082925_7767.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"https://images.baixingliangfan.cn/shopGoodsDetailImg/20201009/20201009082925_393.jpg\" width=\"100%\" height=\"auto\" alt=\"\" /><img src=\"https://images.baixingliangfan.cn/shopGoodsDetailImg/20201009/20201009082925_5234.jpg\" width=\"100%\" height=\"auto\" alt=\"\" />"
+    },
+    "goodComments": [],
+    "advertesPicture": {
+      "PICTURE_ADDRESS": "https://images.baixingliangfan.cn/advertesPicture/20200208/20200208112621_337.jpg",
+      "TO_PLACE": "1",
+      "urlType": 0
+    }
+  }
+}

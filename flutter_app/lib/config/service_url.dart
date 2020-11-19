@@ -6,4 +6,5 @@ const servicePath = {
   'homePageBelowConten':serviceUrl + 'homePageBelowConten', // 商家首页火爆信息
   'getCategory':serviceUrl + 'getCategory', // 商品类别信息
   'getMallGoods': serviceUrl+'getMallGoods', //商品分类的商品列表
+  'getGoodDetailById': serviceUrl+'getGoodDetailById', //商品详细信息列表 // goodId	6206acddbc6844aba8f2628dc5ac57aa
 };
