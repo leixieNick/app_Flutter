@@ -73,3 +73,25 @@ Future request(url, {formData}) async {
     return print('ERROR:========>${error}');
   }
 }
+
+
+Future getGoodsInfo(String goodId) async {
+  try {
+    print('开始获取商品数据..........');
+    Response response;
+    Dio dio = new Dio();
+
+    var formData = {
+      'goodId':goodId,
+    };
+    response = await dio.post(servicePath['getGoodDetailById'],data: formData);
+    if (response.statusCode == 200) {
+      print('商品数据获取成功');
+      return response.data;
+    }else {
+      throw Exception('首页数据获取失败，后端接口出现异常，请检测代码和服务器情况.........');
+    }
+  }catch(error) {
+    return print('ERROR:========>${error}');
+  }
+}
