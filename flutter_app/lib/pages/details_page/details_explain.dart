@@ -5,7 +5,7 @@ class DetailsExplain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.yellow,
+      color: Colors.white,
       width: ScreenUtil().setWidth(750),
       margin: EdgeInsets.only(top: 10),
       padding: EdgeInsets.all(10),

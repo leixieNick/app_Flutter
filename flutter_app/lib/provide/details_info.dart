@@ -19,4 +19,19 @@ class DetailsInfoProvide with ChangeNotifier {
       notifyListeners();
     });
   }
+
+  // 自定义tabBar的状态
+  bool isLeft = true;
+  bool isRight = false;
+  changeLeftAndRight(String changeState) {
+    if (changeState == 'left') {
+      isLeft = true;
+      isRight = false;
+    }else {
+      isLeft = false;
+      isRight = true;
+    }
+
+    notifyListeners();
+  }
 }

@@ -10,7 +10,7 @@ class DetailsTopArea extends StatelessWidget {
     print('goodsInfo = ${goodsInfo}');
     if (goodsInfo != null) {
       return Container(
-        color: Colors.orange,
+        color: Colors.white,
         padding: EdgeInsets.all(4.0),
         child: Column(
           children: [
