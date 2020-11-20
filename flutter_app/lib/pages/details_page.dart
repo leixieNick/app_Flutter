@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/service/service_method.dart';
 import 'package:provide/provide.dart';
-import 'dart:convert';
-
 import '../provide/details_info.dart';
 import './details_page/details_top_area.dart';
+import './details_page/details_explain.dart';
 
 class DetailsPage extends StatelessWidget {
   final String goodsId;
@@ -27,6 +25,7 @@ class DetailsPage extends StatelessWidget {
               child: Column(
                 children: [
                   DetailsTopArea(),
+                  DetailsExplain(),
                 ],
               ),
             );

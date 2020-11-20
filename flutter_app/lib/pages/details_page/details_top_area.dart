@@ -10,8 +10,8 @@ class DetailsTopArea extends StatelessWidget {
     print('goodsInfo = ${goodsInfo}');
     if (goodsInfo != null) {
       return Container(
-        color: Colors.white,
-        padding: EdgeInsets.all(2.0),
+        color: Colors.orange,
+        padding: EdgeInsets.all(4.0),
         child: Column(
           children: [
             _goodsImage(goodsInfo.image1),
