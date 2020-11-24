@@ -36,6 +36,7 @@ class CartProvide with ChangeNotifier {
         'count':count,
         'price':price,
         'images':images,
+        'isCheck': true  //是否已经选择
       };
 
       tempList.add(newGoods);
@@ -70,5 +71,36 @@ class CartProvide with ChangeNotifier {
     notifyListeners();
   }
 
+  //删除购物车中的商品
+  remove() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //prefs.clear();//清空键值对
+    prefs.remove('cartInfo');
+    cartList = [];
+    allPrice = 0 ;
+    allGoodsCount = 0;
+    print('清空完成-----------------');
+    notifyListeners();
+  }
+
+  //删除单个购物车商品
+  deleteOneGoods(String goodsId) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartString = prefs.getString('cartInfo');
+    List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
+
+    int tempIndex = 0;
+    int delIndex = 0;
+    tempList.forEach((item){
+      if(item['goodsId'] == goodsId){
+        delIndex = tempIndex;
+      }
+      tempIndex++;
+    });
+    tempList.removeAt(delIndex);
+    cartString = json.encode(tempList).toString();
+    prefs.setString('cartInfo', cartString);//
+    await getCartInfo();
+  }
 
 }

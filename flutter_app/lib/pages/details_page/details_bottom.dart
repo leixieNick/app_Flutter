@@ -23,7 +23,7 @@ class DetailsBottom extends StatelessWidget {
         children: [
           _IconCart(),
           _addToCart(context, goodsId, goodsName, count, price, images),
-          _buyShop(),
+          _buyShop(context),
         ],
       ),
     );
@@ -62,11 +62,12 @@ class DetailsBottom extends StatelessWidget {
     );
   }
 
-  Widget _buyShop() {
+  Widget _buyShop(context) {
     return Container(
       child: InkWell(
         onTap: (){
           print('立即购买');
+          Provide.value<CartProvide>(context).remove();
         },
         child: Container(
           color: Colors.red,
