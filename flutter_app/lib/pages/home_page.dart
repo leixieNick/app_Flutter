@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage>{
             );
           }else {
             return Center(
-              child: Text("homePageContent 接口数据获取失败"),
+              child: Text("homePageContent 数据获取中..."),
             );
           }
         },

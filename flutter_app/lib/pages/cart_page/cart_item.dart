@@ -77,7 +77,7 @@ class CartItem extends StatelessWidget {
       width:ScreenUtil().setWidth(150) ,
       alignment: Alignment.centerRight,
 
-      child: Column(
+      child: Row(
         children: <Widget>[
           Text('￥${item.price}'),
           Container(
