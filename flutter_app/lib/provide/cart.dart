@@ -55,18 +55,23 @@ class CartProvide with ChangeNotifier {
   getCartInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //获得购物车中的商品,这时候是一个字符串
-    cartString=prefs.getString('cartInfo');
+    cartString = prefs.getString('cartInfo');
     //把cartList进行初始化，防止数据混乱
-    cartList=[];
+    cartList = [];
     //判断得到的字符串是否有值，如果不判断会报错
-    if(cartString==null){
-      cartList=[];
+    if(cartString == null){
+      cartList = [];
     }else{
-      List<Map> tempList= (json.decode(cartString.toString()) as List).cast();
+      List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
+      allPrice = 0;
+      allGoodsCount = 0;
       tempList.forEach((item){
+        if (item['isCheck']) {
+          allPrice += (item['count'] * item['price']);
+          allGoodsCount += item['count'];
+        }
         cartList.add(new CartInfoMode.fromJson(item));
       });
-
     }
     notifyListeners();
   }
