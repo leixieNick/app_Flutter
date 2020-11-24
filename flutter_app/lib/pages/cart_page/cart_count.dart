@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/provide/cart.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
 
 class CartCount extends StatelessWidget {
+  var item;
+  CartCount(this.item);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,35 +17,39 @@ class CartCount extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _reduceBtn(),
-          _countArea(),
-          _addBtn(),
+          _reduceBtn(context),
+          _countArea(context),
+          _addBtn(context),
         ],
       ),
     );
   }
 
-  Widget _reduceBtn() {
+  Widget _reduceBtn(context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Provide.value<CartProvide>(context).addOrReduceAction(item,'reduce');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: item.count > 1 ? Colors.white : Colors.black12,
           border: Border(
             right: BorderSide(color: Colors.black12, width: 1),
           )
         ),
-        child: Text('-'),
+        child: item.count>1? Text('-'):Text(' '),
       ),
     );
   }
 
-  Widget _addBtn() {
+  Widget _addBtn(context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Provide.value<CartProvide>(context).addOrReduceAction(item,'add');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
@@ -56,13 +65,13 @@ class CartCount extends StatelessWidget {
     );
   }
 
-  Widget _countArea() {
+  Widget _countArea(context) {
     return Container(
       width: ScreenUtil().setWidth(70),
       height: ScreenUtil().setHeight(45),
       alignment: Alignment.center,
       color: Colors.white,
-      child: Text('1'),
+      child: Text('${item.count}'),
     );
   }
 
