@@ -46,6 +46,8 @@ dependencies:
   fluro: ^1.7.7
   # html
   flutter_html: ^1.0.2
+  # 数据本地化
+  shared_preferences: ^0.5.12
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/provide/cart.dart';
+import 'package:flutter_app/provide/details_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
 
 class DetailsBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    var goodsInfo = Provide.value<DetailsInfoProvide>(context).goodsInfo.data.goodInfo;
+    var goodsId = goodsInfo.goodsId;
+    var goodsName = goodsInfo.goodsName;
+    var price = goodsInfo.presentPrice;
+    var images = goodsInfo.image1;
+    var count = 1;
+
     return Container(
       color: Colors.lightBlueAccent,
       width: ScreenUtil().setWidth(750),
@@ -11,7 +22,7 @@ class DetailsBottom extends StatelessWidget {
       child: Row(
         children: [
           _IconCart(),
-          _addToCart(),
+          _addToCart(context, goodsId, goodsName, count, price, images),
           _buyShop(),
         ],
       ),
@@ -32,11 +43,12 @@ class DetailsBottom extends StatelessWidget {
     );
   }
 
-  Widget _addToCart() {
+  Widget _addToCart(context, goodsId, goodsName, count, price, images) {
     return Container(
       child: InkWell(
         onTap: (){
           print('加入购物车');
+          Provide.value<CartProvide>(context).save(goodsId, goodsName, count, price, images);
         },
         child: Container(
           color: Colors.green,
