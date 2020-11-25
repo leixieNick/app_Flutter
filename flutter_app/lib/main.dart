@@ -38,6 +38,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print('2020-11-25 技术胖百姓生活+ 照着博客基本完成');
+    print('2020-11-25 技术胖百姓生活+ 未完成部分：1. 首页刷新 2. 购物车显示数字和跳转 3. 分类进入时数据加载');
 
     final router = FluroRouter();
     Routes.configureRoutes(router);
